@@ -1,5 +1,30 @@
-sudo: false
 language: ruby
 rvm:
-  - 2.3.1
-before_install: gem install bundler -v 1.14.6
+  - 2.2.6
+  - 2.3.3
+matrix:
+  include:
+    - rvm: 2.2.6
+      gemfile: gemfiles/Gemfile.rails-4.0
+      env: PA_ORM=active_record
+    - rvm: 2.3.3
+      gemfile: gemfiles/Gemfile.rails-4.0
+      env: PA_ORM=active_record
+    - rvm: 2.3.3
+      gemfile: gemfiles/Gemfile.rails-5.0
+      env: PA_ORM=active_record
+    - rvm: 2.5.1
+      gemfile: gemfiles/Gemfile.rails-5.2
+      env: PA_ORM=active_record
+    - rvm: 2.2.6
+      env: PA_ORM=mongoid
+env:
+  - PA_ORM=active_record
+  - PA_ORM=mongo_mapper
+services:
+  - mongodb
+email:
+  recipients:
+    - piotrek@okonski.org
+  on_success: change
+  on_failure: always
